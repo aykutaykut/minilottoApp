@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+   
+        android:text="Willkommen zu Mini Lotto!" />
+
+    <Button
+        android:id="@+id/btnMinilotto_Spielen"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="Minilotto Spielen"
+              
+       />
+
+    <TextView
+        android:id="@+id/txtSpiel_Hinweis"
+        android:layout_width="fill_parent"
+        android:layout_height="190dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/TextView03"
+       
+        android:text=""
+        />
+
+  
+
+    <TextView
+        android:id="@+id/txtHinweis"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnPrivate_Informationen"
+       
+        android:gravity="center"
+        android:text="Spiel Hinweise"
+       
+        android:textSize="18sp"
+       />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnMinilotto_Spielen"
+       
+        android:gravity="center"
+    
+       />
+
+    <Button
+        android:id="@+id/btnPrivate_Informationen"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TextView02"
+      
+        android:text="Private Information"
+         />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtHinweis"
+    
+        android:gravity="center"
+      />
+
+</RelativeLayout>
