@@ -1,6 +1,6 @@
 package com.minilotto_version1;
 
-
+import com.minilotto_version1.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,9 +40,38 @@ public class WelcomeActivity extends Activity {
 		if (packenLoginInformationen().getString("Message").equals("#")){}
 		else{fehlermelung(packenLoginInformationen().getString("Message"));}
 
-	
+		spielen.setOnClickListener(new View.OnClickListener() {
 
-	
+			@Override
+			public void onClick(View v) {
+				Intent SpielFernsterActivity = new Intent(
+						WelcomeActivity.this, SpielUebersichtActivity.class);
+
+				SpielFernsterActivity.putExtra("LogInformationen",
+						packenLoginInformationen());
+
+				startActivity(SpielFernsterActivity);
+
+			}
+		});
+
+		textHinweis.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				SPHinweis_PrivateInfor
+						.setText("Spielablauf:\n"
+								+ "Du eröffnest ein Spiel oder trittst in eins ein\n"
+								+ "Danach gibst du deinen Tipp ab.\n"
+								+ "Nun wartest du auf die Abgabe\nder Tipps der anderen Mitspieler\n"
+								+ "Mit dem Aktualisieren Button kannst \ndu dir aktuelle Informationen abrufen.\n"
+								+ "Dort siehst du wer mitspielt, und wer welche Zahlen getippt hat\n"
+								+ "\n Beachte! Spielen kann süchtig machen!"
+								+ "\n\n Viel Glück wünschen dir \n Bui\n Ince\n Graffenberger\n und Mitchell");
+				
+			}
+		});
 
 		information.setOnClickListener(new View.OnClickListener() {
 

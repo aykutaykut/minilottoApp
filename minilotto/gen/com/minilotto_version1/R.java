@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.minilotto;
+package com.minilotto_version1;
 
 public final class R {
     public static final class attr {
