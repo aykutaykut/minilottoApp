@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="C:/Users/aykut/workspaceFINAL/MiniLottoV1/ksoap2-android-assembly-2.6.0-jar-with-dependencies (3)-8511be2fac4c4428c0b89015b0abaded.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
