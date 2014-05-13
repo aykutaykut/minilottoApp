@@ -62,12 +62,8 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 		
 		
 	
-	
-		 //Abruf der Daten aus der Datenbank --> emailLesen();
-		 
 			
-		
-		doGetList(); 
+	
 		
 		
 		// ------------------------------------------------------------------------ 	lvSpiel 
@@ -190,9 +186,9 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 
 	public String informationenVonString(String VerarbeiteteInformationen) {
 		VerarbeiteteInformationen.trim();
-		String[] arr = VerarbeiteteInformationen.split(" "); // cat mot chuoi
-																// thanh nhieu
-																// chuoi
+		String[] arr = VerarbeiteteInformationen.split(" "); 
+																
+																
 		this.spielID = Integer.valueOf(arr[0]);
 		this.schwierigRate = Integer.valueOf(arr[1]);
 		this.maxSpieler = Integer.valueOf(arr[2]);
