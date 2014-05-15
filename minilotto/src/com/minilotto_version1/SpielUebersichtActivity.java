@@ -1,4 +1,4 @@
-package com.minilotto;
+package com.minilotto_version1;
 
 import android.support.v7.app.ActionBarActivity;
 
@@ -141,7 +141,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 				{
 					if (aktuelleSpieler == maxSpieler)
 					{
-						fehlermeldung(" ");
+						fehlermeldung("");
 					}
 					else{			
 																	
