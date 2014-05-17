@@ -43,7 +43,12 @@ public class SpielErstellenActivity extends ActionBarActivity {
 	public BigDecimal totalGeld,einsatzGeld; 
 	
 	
-
+	//public final String NAMESPACE="http://AndroidMinilottoDatabaseService.com/";
+	//public final String URL="http://viendatabaseservice.somee.com/MiniLottoDatabaseWebService.asmx?WSDL";
+	
+	ArrayList<String> arrCate=new ArrayList<String>();
+	ArrayAdapter<String>adapter=null;
+	
 	// ------------------------------------------------------------------------ onCreate -> new_spiel_erstellen
 		/*
 		 * layout wird gestartet, EditText, Buttons und co. werden zugeordnet.
@@ -116,7 +121,18 @@ public class SpielErstellenActivity extends ActionBarActivity {
 	}
 	
 	
-
+	// ------------------------------------------------------------------------ packenLoginInformationen()
+	/*
+	 * Konvertierung der Daten vom Nutzer --> Datenformat eingeben
+	 */
+		
+	public Bundle packenLoginInformationen()
+	{
+		Intent callerIntent = getIntent(); 
+		Bundle packageFromCaller = callerIntent.getBundleExtra("LogInformationen");		
+		return packageFromCaller;
+	}
+	
 	// ------------------------------------------------------------------------ showInformation()
 	/*
 	 * Anzeigen der Informationen
