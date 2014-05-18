@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+   >
+
+    <EditText
+        android:id="@+id/editPasswordsReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editUsernameReg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:ems="12"
+        android:hint= "Password"
+        android:inputType="textPassword"
+       />
+
+    <EditText
+        android:id="@+id/editEmailReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editUsernameReg"
+        android:layout_alignRight="@+id/editPasswordsReg"
+        android:layout_below="@+id/editPasswordsReg"
+        android:layout_marginTop="34dp"
+        android:ems="14"
+        android:hint="E-Mail-Adresse"
+        android:inputType="textEmailAddress"
+        />
+
+    <EditText
+        android:id="@+id/editkontoReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/editPasswordsReg"
+        android:layout_below="@+id/editEmailReg"
+        android:layout_marginTop="35dp"
+        android:ems="12"
+        android:hint="Guthaben"
+        android:inputType="number"
+       />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+      
+        android:gravity="center"
+        android:text="Registrieren:"
+       />
+
+    <EditText
+        android:id="@+id/editUsernameReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:ems="12"
+        android:hint="Username"
+       />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+       
+        android:ems="5"
+        android:text="Registrieren"
+      />
+
+</RelativeLayout>
