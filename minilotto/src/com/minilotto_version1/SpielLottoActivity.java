@@ -27,9 +27,7 @@ import android.os.StrictMode;
 
 public class SpielLottoActivity extends ActionBarActivity {
 	
-	public final String NAMESPACE="http://AndroidMinilottoDatabaseService.com/";
-	public final String URL="http://viendatabaseservice.somee.com/Webservice.asmx?WSDL";
-	
+
 	private String Ergebnis_String;
 	private String VorratErgebnis_String;
 	private boolean Gewinner_Gefunden;
@@ -62,3 +60,4 @@ public class SpielLottoActivity extends ActionBarActivity {
 		
 		
 	}
+}
