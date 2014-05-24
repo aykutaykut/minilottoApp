@@ -191,6 +191,36 @@ public class EinfachSpielActivity extends ActionBarActivity {
 		int zahl3 = Integer.parseInt(z3.getText().toString());
 
 		
+		if (pruefen(zahl1,zahl2,zahl3) == false){
+			FehlerMeldung("Sie haben die Daten falsch eingegeben!");
+		}
+		else{
+			
+			this.VorratErgebnis_String = (String.valueOf(zahl1).trim()+
+					String.valueOf(zahl2).trim()+String.valueOf(zahl3).trim()).trim();
+			
+			Ergebnis.setText("Vorrat: "+this.VorratErgebnis_String.toString());
+			
+			if (Pruefen_Ob_Der_Spieler_der_SpielHersteller_ist()==true){																		
+				int ranzahl1 = (int) (Math.random()*9);
+				int ranzahl2 = (int) (Math.random()*9);
+				int ranzahl3 = (int) (Math.random()*9);
+				
+				this.Ergebnis_String = (String.valueOf(ranzahl1).trim()+
+						String.valueOf(ranzahl2).trim()+String.valueOf(ranzahl3).trim()).trim();
+				
+				Insert_Spiel();
+				Update_packageFromSpiel();
+				Update_Login();
+				Insert_Ergebnis();  
+				Insert_VorratErgebnis();
+			}
+			else 
+			{
+				Update_Login();
+				Update_Spiel();
+				Insert_VorratErgebnis();
+			}
 			
 		}
 	}
