@@ -25,9 +25,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-public class SpielLottoActivity extends ActionBarActivity {
+public class EinfachSpielActivity extends ActionBarActivity {
 	
-
+	public final String NAMESPACE="http://AndroidMinilottoDatabaseService.com/";
+	public final String URL="http://viendatabaseservice.somee.com/Webservice.asmx?WSDL";
+	
 	private String Ergebnis_String;
 	private String VorratErgebnis_String;
 	private boolean Gewinner_Gefunden;
@@ -59,5 +61,62 @@ public class SpielLottoActivity extends ActionBarActivity {
 		Ergebnis = (TextView) findViewById(R.id.txtErgebnis_zeigen);
 		
 		
-	}
-}
+		AusPacken_LoginUndSpiel_Informationen(""); 	
+		
+//----------------------- ausführen BUTTON ------------------------------------------------------------		
+		ausführen.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if ((pruefen_Ob_Alle_EditText_Erfüllen_Werden()==true)&&(einmal_ausführen_drücken==false))
+				{
+					RandomToFindTheRightNumber();
+					if(LetzteSpieler()==true)
+					{
+						HashMap GewinnerID = new HashMap();
+						GewinnerID= GewinnerSuchen(); //###############################################
+						if (GewinnerID.get("GewinnerMenge").equals(0)){Information.setText("Es Gibt Kein Gewinnner..! ");}
+						else 
+						{
+							for (int i=1; i <= (Integer.valueOf(GewinnerID.get("GewinnerMenge").toString()));i++)
+							{
+								Gewinner_NachDiesnt(Integer.valueOf(GewinnerID.get("Gewinner"+i).toString()));
+							}
+						}
+					}
+					else {Information.setText("Informationen der MitSpieler");}
+				}
+				else {FehlerMeldung("Alles EditText erfüllen und nur einmal ausführen Click");}											
+			}
+			
+		});
+		
+//***************************************************************************************************			
+		
+//------------------- EXIT BUTTON -------------------------------------------------------------------	
+		
+		
+		refresh.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				refresh.refreshDrawableState();	
+				
+				Intent callerIntent = getIntent(); 
+				Bundle packageFromSpiel = callerIntent.getBundleExtra("SpielInformationen");
+				if (ActuellSpieler_Gleich_MaxSpieler(packageFromSpiel.getInt("ID_Spiel"))==true)//########################################################
+				{
+					String emailLesen=Email_Lesen(String.valueOf(packageFromSpiel.getInt("ID_Spiel")));
+					AusPacken_LoginUndSpiel_Informationen(emailLesen); 
+					Ergebnis.setText("Lotto Zahl: "+ get_Ergebnis_der_SpielID());
+				}
+				else{
+					AusPacken_LoginUndSpiel_Informationen("");
+					Ergebnis.setText("Vorrat= "+VorratErgebnis_String);
+				}
+				
+			}
+		});
+		
+	}}
