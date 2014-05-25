@@ -70,7 +70,7 @@ public class SpielFernsterActivity extends ActionBarActivity implements funktion
 		
 		
 		//Email_Lesen();
-		doGetList() 
+		doGetList();  
 		
 		lvSpiel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -164,9 +164,7 @@ public class SpielFernsterActivity extends ActionBarActivity implements funktion
 		
 		});
 	}
-//*************************************************************************************************
-// ------------------------------------------------------------------------------------------------
-
+//**********************************************
 	public void doGetList() {
 		String str = "";
 		try {
@@ -209,8 +207,7 @@ public class SpielFernsterActivity extends ActionBarActivity implements funktion
 			Information.setText(ex.toString());
 		}
 	}
-//****************************************************************************************	
-//*********************************************************
+//**********************************************************************************
 	public String InformationenVonString(String VerarbeiteteInformationen) {
 		VerarbeiteteInformationen.trim();
 		String[] arr = VerarbeiteteInformationen.split(" "); // cat mot chuoi
@@ -234,8 +231,7 @@ public class SpielFernsterActivity extends ActionBarActivity implements funktion
 	}
 	
 //*******************************************************************************************************	
-
-// Alles SpielInformationen packen um weiter zu liefern  	
+	
 	public Bundle Packen_SpielInformationen()
     {
     	Bundle SpielInfor = new Bundle();
@@ -248,8 +244,7 @@ public class SpielFernsterActivity extends ActionBarActivity implements funktion
 		return SpielInfor;
     }
 	
-//*****************************************************************************************************	
-
+//***************************************
 // Informationen von Login Activity wird hier geholt.
 	public Bundle Packen_LoginInformationen()
 	{
@@ -383,6 +378,48 @@ public class SpielFernsterActivity extends ActionBarActivity implements funktion
 		});
 		b.create().show();
 	}
+//*************************************************************************************************************
+//-------------------------------------------------------------------------------------------------------------
+	
+	public String Email_Lesen(String SpielID)
+	{
+		String Str= "Ohne";
+		try 
+    	{
+    		final String METHOD_NAME="getListLogin";
+    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+    		envelope.dotNet=true;
+    		envelope.setOutputSoapObject(request);
+    		MarshalFloat marshal=new MarshalFloat();
+    		marshal.register(envelope);
+    		
+    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
+    		androidHttpTransport.call(SOAP_ACTION, envelope);
+    		SoapObject soapArray=(SoapObject) envelope.getResponse();
+    		for(int i=0; i<soapArray.getPropertyCount(); i++)
+    		 {
+    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
+    	
+    			if (soapItem.getProperty("Email").toString().contains("#"+SpielID))
+    			{
+    				Str = Str.replace("Ohne", "");
+    				if(Str.contains(soapItem.getProperty("Username").toString())){}
+    				else{Str = Str+ soapItem.getProperty("Username") +",\t";}
+    			}
+    			else {}
+    			
+    		 }
+    		   		
+    	}
+    	catch (Exception ex)
+    	{
+    		Toast.makeText(this, "GetList Login fail ", Toast.LENGTH_LONG).show();
+    	}
+		return Str;
+	}
+}
 
 interface funktion
 {
