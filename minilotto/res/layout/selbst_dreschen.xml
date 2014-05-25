@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    tools:ignore="ScrollViewSize" >
+
+    <LinearLayout
+        style="@style/padded_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_label_selbst_dreschen" />
+
+        <TextView
+            style="@style/generic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_selbst_dreschen" />
+
+        <Spinner
+            android:id="@+id/sp_text_teil1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/Zahl1" >
+
+
+            <!-- Preview: listitem=@android:layout/simple_spinner_dropdown_item -->
+        </Spinner>
+
+        <Spinner
+            android:id="@+id/sp_text_teil2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/Zahl2" >
+
+            <!-- Preview: listitem=@android:layout/simple_spinner_dropdown_item -->
+        </Spinner>
+
+        <Spinner
+            android:id="@+id/sp_text_teil3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/Zahl3" >
+
+   
+
+            <!-- Preview: listitem=@android:layout/simple_spinner_dropdown_item -->
+        </Spinner>
+
+        <TextView
+            android:id="@+id/txt_ganzer_satz"
+            style="@style/generic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_ganzer_satz"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+</ScrollView>
