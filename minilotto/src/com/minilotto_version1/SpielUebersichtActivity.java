@@ -31,7 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SpielFernsterActivity extends ActionBarActivity implements funktion{
+public class SpielUebersichtActivity extends ActionBarActivity implements funktion{
 
 	public TextView Information;
 	
