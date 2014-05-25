@@ -31,7 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SpielUebersichtActivity extends ActionBarActivity implements funktion{
+public class SpielFernsterActivity extends ActionBarActivity implements funktion{
 
 	public TextView Information;
 	
@@ -39,6 +39,9 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 	ArrayList<String> arrSpiel_copy = new ArrayList<String>(); ///#################################################
 	ArrayAdapter<String> adapter = null;
 
+	final String NAMESPACE = "http://AndroidMinilottoDatabaseService.com/";
+	//public final String URL="http://viendatabaseservice.somee.com//mywebservice.asmx?WSDL";
+	final String URL = "http://viendatabaseservice.somee.com/WebService.asmx?WSDL";
 
 	private Button NewSpiel, MitSpiel;
 	private ListView lvSpiel;
@@ -67,7 +70,8 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 		
 		
 		//Email_Lesen();
-		doGetList();  
+		doGetList() 
+		
 		lvSpiel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -108,12 +112,12 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 			public void onClick(View v) {
 				
 				if (Spieler_hat_schon_ein_Vorrat_gegeben()==true)
-				{FehlerMeldung("Error");}
+				{FehlerMeldung("Sie hat schon ein Vorrat für dieses Spiel gegeben");}
 				else 
 				{
 					if (Actuell_Spieler == Max_Spieler)
 					{
-						FehlerMeldung("Error");
+						FehlerMeldung("leider Keinen Platz mehr\n Bitte wählen Sie andere");
 					}
 					else{			
 																	
@@ -160,13 +164,58 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 		
 		});
 	}
+//*************************************************************************************************
+// ------------------------------------------------------------------------------------------------
 
+	public void doGetList() {
+		String str = "";
+		try {
+			final String METHOD_NAME = "getListSpiels";
+			final String SOAP_ACTION = NAMESPACE + METHOD_NAME;
+			
+			SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+			SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+			envelope.dotNet = true;
+			envelope.setOutputSoapObject(request);
+			MarshalFloat marshal = new MarshalFloat();
+			marshal.register(envelope);
+			
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+			
+			SoapObject soapArray2 = (SoapObject) envelope.getResponse();
+			arrSpiel.clear();
+			for (int i = 0; i < soapArray2.getPropertyCount(); i++) {
+				SoapObject soapItem = (SoapObject) soapArray2.getProperty(i);
+				String SpielID = soapItem.getProperty("SpielID").toString().trim();
+				String Schwerrate = soapItem.getProperty("Schwerrate").toString();
+				String MaxSpieler = soapItem.getProperty("MaxSpieler").toString();
+				String ActuellSpieler = soapItem.getProperty("ActuellSpieler").toString();
+				String GeldPol = soapItem.getProperty("GeldPol").toString();
+				arrSpiel.add(SpielID + " " + Schwerrate + " " + MaxSpieler
+						+ " " + ActuellSpieler + " " + GeldPol);
+			
+				if (MaxSpieler.equals(ActuellSpieler)){str="\tbeendet: \n"+Email_Lesen(SpielID)+" Gewonnen";}
+				else {str="\t Vorgang";}
+				arrSpiel_copy.add("GAME: "+SpielID+" "+str);// #############################################################
+				if (this.MaxSpielID <Integer.parseInt(SpielID)){this.MaxSpielID = Integer.parseInt(SpielID);}
+				else {}
+				
+			}
 
-	
+			adapter.notifyDataSetChanged();
+		} catch (Exception ex) {
+			FehlerMeldung("Fehler bei der Internetverbindung");
+			Information.setText(ex.toString());
+		}
+	}
+//****************************************************************************************	
+//*********************************************************
 	public String InformationenVonString(String VerarbeiteteInformationen) {
 		VerarbeiteteInformationen.trim();
-		String[] arr = VerarbeiteteInformationen.split(" ");
-		
+		String[] arr = VerarbeiteteInformationen.split(" "); // cat mot chuoi
+																// thanh nhieu
+																// chuoi
 		this.Spiel_ID = Integer.valueOf(arr[0]);
 		this.Schwer_Rate = Integer.valueOf(arr[1]);
 		this.Max_Spieler = Integer.valueOf(arr[2]);
@@ -193,7 +242,7 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
     	SpielInfor.putInt("ID_Spiel", this.Spiel_ID);
     	SpielInfor.putInt("SchwerRate", this.Schwer_Rate);
     	SpielInfor.putInt("MaxSpieler", this.Max_Spieler);
-    	SpielInfor.putInt("ActuellSpieler", this.Actuell_Spieler + 1); 
+    	SpielInfor.putInt("ActuellSpieler", this.Actuell_Spieler + 1);  // diser Fall wir spielen mit dh.  das Spiel schon vorher Exitiert
     	SpielInfor.putDouble("EinSatzGeld_DoubleWert", this.EinSatz_Geld_DoubleWert);
     	SpielInfor.putInt("MaxSpielID", this.MaxSpielID);
 		return SpielInfor;
@@ -214,7 +263,101 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 	
 //*********************************************************************************************************
 
+	public StringBuilder getList_LoginID_die_das_Spiel_Schon_gespielt_haben()
+	{
+		
+		StringBuilder list_Spieler_Username= new StringBuilder();
+		list_Spieler_Username.append("Actuelle Spieler"+":\t");
+		
+		String [] arraySpielerID = String.valueOf(Get_list_ID_der_Spieler()).split("#");
+		
+		for (int j = 0; j <arraySpielerID.length; j++)
+		{
+			if((Packen_LoginInformationen().getInt("ID_Login"))==Integer.parseInt(arraySpielerID[j].toString().trim()))
+			{this.mit_spielen_verboten=true; break;}
+			else this.mit_spielen_verboten=false;
+		}
+
+		for (int j = 0; j <arraySpielerID.length; j++ )
+		{
+			try 
+	    	{
+	    		final String METHOD_NAME="getListLogin";
+	    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+	    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+	    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+	    		envelope.dotNet=true;
+	    		envelope.setOutputSoapObject(request);
+	    		MarshalFloat marshal=new MarshalFloat();
+	    		marshal.register(envelope);
+	    		
+	    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
+	    		androidHttpTransport.call(SOAP_ACTION, envelope);
+	    		SoapObject soapArray=(SoapObject) envelope.getResponse();
+	    		
+	    		for(int i=0; i<soapArray.getPropertyCount(); i++)
+	    		 {
+	    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
+	    			if(Integer.parseInt(arraySpielerID[j]) ==Integer.parseInt(soapItem.getProperty("LoginID").toString()))
+	    			{
+	    				list_Spieler_Username.append(arraySpielerID[j]+": "+(soapItem.getProperty("Username")+",\t")).toString().trim();
+	    				
+	    			}
+	    			else continue;
+	    		 }
+	    	}
+	    	catch (Exception ex)
+	    	{
+	    		Toast.makeText(this, "GetList VorratErgebnisse fail ", Toast.LENGTH_LONG).show();
+	    	}
+		}
+		//Toast.makeText(this, "this.Gewinner= "+ this.Gewinner, Toast.LENGTH_LONG).show();
 	
+		return list_Spieler_Username;
+	}
+	
+//*****************************************************************************************************
+//-----------------------------------------------------------------------------------------------------
+	
+	public StringBuilder Get_list_ID_der_Spieler()
+	{
+		StringBuilder list_LoginID= new StringBuilder();
+		list_LoginID.append("");
+		
+		try 
+    	{
+    		final String METHOD_NAME="getListVorratErgebnisse";
+    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+    		envelope.dotNet=true;
+    		envelope.setOutputSoapObject(request);
+    		MarshalFloat marshal=new MarshalFloat();
+    		marshal.register(envelope);
+    		
+    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
+    		androidHttpTransport.call(SOAP_ACTION, envelope);
+    		SoapObject soapArray=(SoapObject) envelope.getResponse();
+    		
+    		for(int i=0; i<soapArray.getPropertyCount(); i++)
+    		 {
+    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
+    			if(this.Spiel_ID ==Integer.parseInt(soapItem.getProperty("SpielID").toString()))
+    			{
+    				list_LoginID.append((soapItem.getProperty("LoginID")+"#")).toString().trim();
+    				
+    			}
+    			else continue;
+    		 }
+    		   		
+    	}
+    	catch (Exception ex)
+    	{
+    		Toast.makeText(this, "GetList VorratErgebnisse fail ", Toast.LENGTH_LONG).show();
+    	}
+		
+		return list_LoginID;
+	}
 //*********************************************************************************************************
 //---------------------------------------------------------------------------------------------------------
 	public boolean Spieler_hat_schon_ein_Vorrat_gegeben()
