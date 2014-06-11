@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-  >
+    android:background="@drawable/android_back_main_hell">
 
     <Button
         android:id="@+id/btnNeuSpiel"
@@ -12,7 +12,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:ems="10"
-      
+         android:background="#eff3f7"
+     
+        android:textColor="#29405b"
         android:text="Spiel erstellen!" />
 
     <TextView
@@ -32,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-          
+              android:background="#0d2037"
+        android:textColor="#f5f7fa"
         android:gravity="center"
         android:text="Neues Spiel erstellen!" />
 
@@ -42,6 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnNeuSpiel"
+        android:background="#0d2037"
+        android:textColor="#f5f7fa"
         android:gravity="center"
         android:text="Spiel Informationen:" />
 
@@ -50,7 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:textColor="#FFFFFF" >
     </ListView>
 
     <Button
@@ -59,10 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/ListView"
         android:layout_alignParentLeft="true"
-       
+        android:background="#eff3f7"
         android:gravity="center"
         android:text="Mitspielen!"
-      />
+        android:textColor="#29405b" />
 
     <TextView
         android:id="@+id/TextView01"
@@ -70,6 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnMitspielen"
         android:layout_alignParentLeft="true"
-       />
+        android:background="#0d2037"
+        android:gravity="center"
+        android:textColor="#f5f7fa" />
 
 </RelativeLayout>
