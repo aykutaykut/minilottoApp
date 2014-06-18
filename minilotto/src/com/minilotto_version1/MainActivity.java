@@ -1,4 +1,4 @@
-package com.minilotto;
+package com.minilott_version1;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;

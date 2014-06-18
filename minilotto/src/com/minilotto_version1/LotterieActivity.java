@@ -1,4 +1,4 @@
-package com.minilotto;
+package com.minilotto_version1;
 
 import java.util.Random;
 

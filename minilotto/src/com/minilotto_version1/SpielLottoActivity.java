@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-public class EinfachSpielActivity extends ActionBarActivity {
+public class SpielLottoActivity extends ActionBarActivity {
 	
 	public final String NAMESPACE="http://AndroidMinilottoDatabaseService.com/";
 	public final String URL="http://viendatabaseservice.somee.com/Webservice.asmx?WSDL";

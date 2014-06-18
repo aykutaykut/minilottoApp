@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.minilotto_version1.MainActivity"
+            android:name="com.minilotto.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,53 +25,53 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.minilotto_version1.SpielFernsterActivity"
+            android:name="com.minilotto.SpielUebersichtActivity"
             android:label="@string/title_activity_spiel_fernster"
-            android:parentActivityName="com.minilotto_version1.MainActivity" >
+            android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.minilotto_version1.MainActivity" />
         </activity>
         <activity
-            android:name="com.minilotto_version1.RegisterFernsterActivity"
+            android:name="com.minilotto.RegistrierungActivity"
             android:label="@string/title_activity_register_fernster"
-            android:parentActivityName="com.minilotto_version1.MainActivity" >
+            android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.minilotto_version1.MainActivity" />
         </activity>
         <activity
-            android:name="com.minilotto_version1.NewSpielFernsterActivity"
+            android:name="com.minilotto.SpielErstellenActivity"
             android:label="@string/title_activity_new_spiel_fernster" >
         </activity>
         <activity
-            android:name="com.minilotto_version1.MitRegisterFernsterActivity"
+            android:name="com.minilotto.MitRegisterFernsterActivity"
             android:label="@string/title_activity_mit_register_fernster" >
         </activity>
         <activity
-            android:name="com.minilotto_version1.EinfachSpielActivity"
+            android:name="com.minilotto.SpielLottoActivity"
             android:label="@string/title_activity_einfach_spiel" >
         </activity>
         <activity
-            android:name="com.minilotto_version1.MittleSpielActivity"
+            android:name="com.minilotto.MittleSpielActivity"
             android:label="@string/title_activity_mittle_spiel" >
         </activity>
         <activity
-            android:name="com.minilotto_version1.SchwerSpielActivity"
+            android:name="com.minilotto.SchwerSpielActivity"
             android:label="@string/title_activity_schwer_spiel" >
         </activity>
         <activity
-            android:name="com.minilotto_version1.MainActivity_test_test"
+            android:name="com.minilotto.MainActivity_test_test"
             android:label="@string/title_activity_main_activity_test_test"
-            android:parentActivityName="com.minilotto_version1.MainActivity" >
+            android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.minilotto_version1.MainActivity" />
         </activity>
         <activity
-            android:name="com.minilotto_version1.Wellcome_Activity"
+            android:name="com.minilotto.WelcomeActivity"
             android:label="@string/title_activity_wellcome_"
-            android:parentActivityName="com.minilotto_version1.MainActivity" >
+            android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.minilotto_version1.MainActivity" />
