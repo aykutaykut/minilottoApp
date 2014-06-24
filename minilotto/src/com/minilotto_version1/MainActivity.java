@@ -1,4 +1,4 @@
-package com.minilott_version1;
+package com.minilotto;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -47,6 +47,11 @@ public class MainActivity extends ActionBarActivity {
 	public String loginUsername,email,pass,gratulation;
 	public BigDecimal guthaben;
 	
+	ArrayList<String> arrLog=new ArrayList<String>();
+	ArrayAdapter<String>adapter=null;
+	
+	final String NAMESPACE="http://AndroidMinilottoDatabaseService.com/";
+	final String URL="http://viendatabaseservice.somee.com/Webservice.asmx?WSDL";
 	
 	// ------------------------------------------------------------------------ onCreat -> activity_main
 	/*
@@ -80,13 +85,13 @@ public class MainActivity extends ActionBarActivity {
 				{
 					//herstellen (SpielFernsterActivity) und starten 
 					Intent Wellcome_Activity = new Intent (MainActivity.this, WelcomeActivity.class);
-					// weiter liefern Login_Datei f�r n�schte Activity (SpielFernsterActivity)				
+					// weiter liefern Login_Datei für näschte Activity (SpielFernsterActivity)				
 					Wellcome_Activity.putExtra("LogInformationen", packenLoginInformationen());
 					
 					startActivity(Wellcome_Activity);
 				}
 				else {
-					fehlermeldung("Falsche Login Daten eingegeben!");
+					fehlermeldung("!");
 				}
 			}
 			
@@ -112,11 +117,73 @@ public class MainActivity extends ActionBarActivity {
        
     }
     
+ // ------------------------------------------------------------------------ doGetList()
+    /*
+     * Logindaten erhalten
+     */
+    	
     
-   
+    
+    
+    public void doGetList() 
+    {
+    	try 
+    	{
+    		final String METHOD_NAME="getListLogin";
+    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+    		envelope.dotNet=true;
+    		envelope.setOutputSoapObject(request);
+    	
+    		
+    		MarshalFloat marshal=new MarshalFloat();
+    		marshal.register(envelope); 		
+    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL); 		
+    		androidHttpTransport.call(SOAP_ACTION, envelope);
+    		SoapObject soapArray1=(SoapObject) envelope.getResponse();
+    		arrLog.clear();   		
+    		String LogInformation = (username.getText().toString()).trim() + (password.getText().toString()).trim();
+    		LogInformation.trim();
+    		
+    		for(int i=0; i<soapArray1.getPropertyCount(); i++)
+    		 {
+    			SoapObject soapItem =(SoapObject) soapArray1.getProperty(i);
+    			String LogID=soapItem.getProperty("LoginID").toString();
+    			String Logname=soapItem.getProperty("Username").toString();
+    			String Pass=soapItem.getProperty("Passwords").toString();
+    			String Email=soapItem.getProperty("Email").toString();
+    			String Bank=soapItem.getProperty("Bank").toString();
+    			
+    			LogID.trim();
+    			Logname.trim();
+    			Pass.trim();
+    			Email.trim();
+    			Bank.trim();
+    			
+    			this.loginID = Integer.parseInt(LogID);
+    			this.loginUsername = Logname;
+    			this.pass = Pass;
+    			this.email = Email;
+    			this.doubleGuthaben = Double.valueOf(Bank);
+    			this.guthaben = BigDecimal.valueOf(doubleGuthaben);
+    			
+    			arrLog.add((Logname+Pass).trim());
+    			if (arrLog.get(i).equals(LogInformation)){erfolg = true; break;}
+    			else {erfolg = false;}
+
+    		 }
+    		
+    		//adapter.notifyDataSetChanged();
+    	}
+    	catch (Exception ex)
+    	{
+    		fehlermeldung("Internet Verbindungsfehler");
+    	}
+    }
  // ------------------------------------------------------------------------ emailLesen()
     /*
-     * Nachrichten aus E-Mail auslesen; Benachrichtigung �ber Gewinn wird hier ausgegeben, wenn gewonnnen wurde!
+     * Nachrichten aus E-Mail auslesen; Benachrichtigung über Gewinn wird hier ausgegeben, wenn gewonnnen wurde!
      */
     	
     
@@ -132,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
     		else 
     		{
     			this.email = arr[0]+"#"+arr[1];
-    			this.gratulation = ("Sie haben bei folgendem Game\t" +arr[1]+arr[2]+" Euro gewonnen");
+    			this.gratulation = ("");
     		}
 		}
 		catch (ArrayIndexOutOfBoundsException ex)
@@ -183,5 +250,49 @@ public class MainActivity extends ActionBarActivity {
 		b.create().show();
 	}
 
-   
+    
+
+    // ------------------------------------------------------------------------ updateLogin()
+       /*
+        * Login Daten werden aktualisiert
+        */
+       	
+    
+    public void updateLogin()
+    {
+    	try
+	    {		    
+		    //Toast.makeText(this, "Update_Login ", Toast.LENGTH_LONG).show();
+		    
+		    final String METHOD_NAME="UpdateSpieler";
+		    final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+		    
+		    SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+		    SoapObject newSpieler=new SoapObject(NAMESPACE, "_login");
+		    
+			newSpieler.addProperty("LoginID",this.loginID);			
+			newSpieler.addProperty("Username",this.loginUsername);			
+			newSpieler.addProperty("Passwords",this.pass);
+			newSpieler.addProperty("Email",this.email);
+			newSpieler.addProperty("Bank",this.doubleGuthaben);
+			request.addSoapObject(newSpieler);
+		    
+		    SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		    envelope.dotNet=true;
+		    envelope.setOutputSoapObject(request);
+		    MarshalFloat marshal=new MarshalFloat();
+    		marshal.register(envelope);
+    		
+		  //tạo đối tượng HttpTransportSE
+		    HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
+		    androidHttpTransport.call(SOAP_ACTION, envelope);
+
+		    //SoapPrimitive soapPrimitive= (SoapPrimitive)  envelope.getResponse();
+		    //Toast.makeText(this, soapPrimitive.toString(), Toast.LENGTH_LONG).show();
+	    }
+	    catch(Exception e)
+	    {
+	    	Toast.makeText(this, "Fehler Login Update", Toast.LENGTH_LONG).show();
+	    }
+    }
 }
