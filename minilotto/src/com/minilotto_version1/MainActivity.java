@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity {
 					startActivity(Wellcome_Activity);
 				}
 				else {
-					fehlermeldung("!");
+					fehlermeldung("Falsche Login Daten eingegeben!");
 				}
 			}
 			
@@ -199,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
     		else 
     		{
     			this.email = arr[0]+"#"+arr[1];
-    			this.gratulation = ("");
+    			this.gratulation = ("Sie haben bei folgendem Game\t" +arr[1]+arr[2]+" Euro gewonnen");
     		}
 		}
 		catch (ArrayIndexOutOfBoundsException ex)
