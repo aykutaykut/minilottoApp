@@ -8,11 +8,14 @@ import java.util.ArrayList;
 
 
 
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalFloat;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
+import com.minilotto_version1.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,9 +34,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SpielUebersichtActivity extends ActionBarActivity implements funktion{
+public class SpielUebersichtActivity extends ActionBarActivity {
 
-	public TextView Information;
+	// ------------------------------------------------------------------------ Deklarationen
+	
+	public TextView information;
 	
 	ArrayList<String> arrSpiel = new ArrayList<String>();
 	ArrayList<String> arrSpiel_copy = new ArrayList<String>(); ///#################################################
@@ -43,60 +48,73 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 	//public final String URL="http://viendatabaseservice.somee.com//mywebservice.asmx?WSDL";
 	final String URL = "http://viendatabaseservice.somee.com/WebService.asmx?WSDL";
 
-	private Button NewSpiel, MitSpiel;
+	private Button neuesSpiel, mitSpielen;
 	private ListView lvSpiel;
 	
-	public int Spiel_ID, Schwer_Rate, Max_Spieler, Actuell_Spieler, MaxSpielID = 0;;
-	public BigDecimal EinSatz_Geld;
-	public double EinSatz_Geld_DoubleWert;
-	public boolean mit_spielen_verboten;
-	public String Gewinner="Ohne";
+	public int spielID, schwierigRate, maxSpieler, aktuelleSpieler, maxSpielID = 0;;
+	public BigDecimal einsatzGeld;
+	public double einsatzGeldDoubleWert;
+	public boolean mitspielenVerboten;
+	public String gewinner="Ohne";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.spielen_fernster);
+		setContentView(R.layout.spiel_uebersicht);
 
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 
-		Information = (TextView) findViewById(R.id.txtInformation);		
+		information = (TextView) findViewById(R.id.txtInformation);		
 		lvSpiel = (ListView) findViewById(R.id.ListView);
 		
 		
 		adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, arrSpiel_copy);
 		lvSpiel.setAdapter(adapter);
 		
+	
+		 //Abruf der Daten aus der Datenbank --> emailLesen();
+		 
+			
+		
+		doGetList(); 
 		
 		
-		//Email_Lesen();
-		doGetList();  
-		
+		// ------------------------------------------------------------------------ 	lvSpiel 
+		/*
+		 * Spiel Informationen list view
+		 */
+
 		lvSpiel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				arrSpiel_copy.get(position);			
-				InformationenVonString(arrSpiel.get(position));
-				String list_LoginID = String.valueOf((getList_LoginID_die_das_Spiel_Schon_gespielt_haben()));
-				Information.setText((InformationenVonString(arrSpiel.get(position)))+"\n"+list_LoginID); 
+				informationenVonString(arrSpiel.get(position));
+				String list_LoginID = String.valueOf((getListLoginIDSpielSchonGespielt()));
+				information.setText((informationenVonString(arrSpiel.get(position)))+"\n"+list_LoginID); 
 
 			}
 		});
 
-		NewSpiel = (Button) findViewById(R.id.btnNeuSpiel);
-		MitSpiel = (Button) findViewById(R.id.btnMitspielen);
+		neuesSpiel = (Button) findViewById(R.id.btnNeuSpiel);
+		mitSpielen = (Button) findViewById(R.id.btnMitspielen);
+	
 		
-//******************************************************************************************************
-		NewSpiel.setOnClickListener(new View.OnClickListener() {
+		// ------------------------------------------------------------------------ 	Button neues Spiel 
+		/*
+		 * Button um neues Spiel zu eröffnen
+		 */
+	
+		neuesSpiel.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent NewSpielFernsterActivity = new Intent(SpielFernsterActivity.this,NewSpielFernsterActivity.class);
+				Intent NewSpielFernsterActivity = new Intent(SpielUebersichtActivity.this,SpielErstellenActivity.class);
 			
 				// Informationen von Login Activity wird hier weiter geliefert.
-				NewSpielFernsterActivity.putExtra("LogInformationen", Packen_LoginInformationen());
-				NewSpielFernsterActivity.putExtra("MaxSpielID_Paket", MaxSpielID_Paket());
+				NewSpielFernsterActivity.putExtra("LogInformationen", packenLoginInformationen());
+				NewSpielFernsterActivity.putExtra("MaxSpielID_Paket", maxSpielIDPaket());
 				
 				startActivity(NewSpielFernsterActivity);
 
@@ -105,35 +123,42 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 
 		
 		
-//************************************************************************************************************
-		MitSpiel.setOnClickListener(new View.OnClickListener() {
+		// ------------------------------------------------------------------------ 	Button Mitspielen 
+		/*
+		 * Buttom um mitzuspielen
+		 * 
+		 * Fälle: Wenn man schon getippt hat --> Fehlermeldung
+		 * Wenn Spiel schon voll --> Fehlermeldung
+		 */
+		mitSpielen.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				
-				if (Spieler_hat_schon_ein_Vorrat_gegeben()==true)
-				{FehlerMeldung("Sie hat schon ein Vorrat für dieses Spiel gegeben");}
+				if (spielerHatSchonGetippt()==true)
+				{fehlermeldung("Sie hat schon ein Vorrat für dieses Spiel gegeben");}
 				else 
 				{
-					if (Actuell_Spieler == Max_Spieler)
+					if (aktuelleSpieler == maxSpieler)
 					{
-						FehlerMeldung("leider Keinen Platz mehr\n Bitte wählen Sie andere");
+						fehlermeldung("leider Keinen Platz mehr\n Bitte wählen Sie andere");
 					}
 					else{			
 																	
 					
-						Intent EinfachSpielActivity = new Intent(SpielFernsterActivity.this,EinfachSpielActivity.class);
+						Intent EinfachSpielActivity = new Intent(SpielUebersichtActivity.this,SpielLottoActivity.class);
 						
 						// Informationen von Spiel Activity wird hier weiter geliefert
-						EinfachSpielActivity.putExtra("SpielInformationen", Packen_SpielInformationen());					
+						EinfachSpielActivity.putExtra("SpielInformationen", packenSpielInformationen());					
 						// Informationen von Login Activity wird hier weiter geliefert.
-						EinfachSpielActivity.putExtra("LogInformationen", Packen_LoginInformationen());
+						EinfachSpielActivity.putExtra("LogInformationen", packenLoginInformationen());
 						
 						startActivity(EinfachSpielActivity);
 						
 					}
 				}
-				
+				// Code um das Ganze Spiel zu erweitern und mehrere Schwierigkeitsgrade einzubauen 
+	            // So lassen!
 				/*
 				case 2:
 					Intent MittleSpielActivity = new Intent(SpielFernsterActivity.this,MittleSpielActivity.class);
@@ -164,7 +189,19 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 		
 		});
 	}
-//**********************************************
+	
+	// ------------------------------------------------------------------------ 	doGetList(); 
+	/*
+	 * Abfruf der Daten des Spiels
+	 * Fälle:
+	 * 1 - Spielplatz nicht vorhanden, Gewinner nicht vorhanden --> Spiel zu Ende -> Kein Gewinner!
+	 * 2 - Spielplatz nicht vorhanden, Gewinner vorhanden -> Spiel zu Ende -> Gewinner: Spieler XY!
+	 * 3 - Spielplatz vorhanden -> Spielplätze verfügbar! 
+	 * 
+	 */
+	
+	
+	
 	public void doGetList() {
 		String str = "";
 		try {
@@ -192,85 +229,120 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 				String GeldPol = soapItem.getProperty("GeldPol").toString();
 				arrSpiel.add(SpielID + " " + Schwerrate + " " + MaxSpieler
 						+ " " + ActuellSpieler + " " + GeldPol);
-			
-				if (MaxSpieler.equals(ActuellSpieler)){str="\tbeendet: \n"+Email_Lesen(SpielID)+" Gewonnen";}
-				else {str="\t Vorgang";}
-				arrSpiel_copy.add("GAME: "+SpielID+" "+str);// #############################################################
-				if (this.MaxSpielID <Integer.parseInt(SpielID)){this.MaxSpielID = Integer.parseInt(SpielID);}
+				
+				// Ist das Spiel voll?
+				if (MaxSpieler.equals(ActuellSpieler))
+				{
+					// Hat ein Spieler gewonnen
+					if (emailLesen(SpielID)=="Nein"){
+					str="\t - Spiel ist zu Ende! \nKein Sieger";}
+					else {
+						str="\t - Spiel ist zu Ende! \nSieger: " + emailLesen(SpielID);
+					}
+			   	}
+				else {
+				str="\t - Spielplätze vorhanden!";
+				}
+					
+				arrSpiel_copy.add("Game: "+SpielID+" "+str);// #############################################################
+				if (this.maxSpielID <Integer.parseInt(SpielID)){this.maxSpielID = Integer.parseInt(SpielID);}
 				else {}
 				
 			}
 
 			adapter.notifyDataSetChanged();
 		} catch (Exception ex) {
-			FehlerMeldung("Fehler bei der Internetverbindung");
-			Information.setText(ex.toString());
+			fehlermeldung("Fehler bei der Internetverbindung");
+			information.setText(ex.toString());
 		}
 	}
-//**********************************************************************************
-	public String InformationenVonString(String VerarbeiteteInformationen) {
+	
+	// ------------------------------------------------------------------------ 	informationenVonString(...)
+		/*
+		 * Informationen für das Informationsfenster bekommen:
+		 * Spieleranzahl Aktuelle/Maximale + Erforderliche Geldeinsatz für das Spiel
+		 */
+		
+
+	public String informationenVonString(String VerarbeiteteInformationen) {
 		VerarbeiteteInformationen.trim();
 		String[] arr = VerarbeiteteInformationen.split(" "); // cat mot chuoi
 																// thanh nhieu
 																// chuoi
-		this.Spiel_ID = Integer.valueOf(arr[0]);
-		this.Schwer_Rate = Integer.valueOf(arr[1]);
-		this.Max_Spieler = Integer.valueOf(arr[2]);
-		this.Actuell_Spieler = Integer.valueOf(arr[3]);
-		this.EinSatz_Geld_DoubleWert = Double.valueOf(arr[4]);
-		this.EinSatz_Geld = BigDecimal.valueOf(EinSatz_Geld_DoubleWert);
+		this.spielID = Integer.valueOf(arr[0]);
+		this.schwierigRate = Integer.valueOf(arr[1]);
+		this.maxSpieler = Integer.valueOf(arr[2]);
+		this.aktuelleSpieler = Integer.valueOf(arr[3]);
+		this.einsatzGeldDoubleWert = Double.valueOf(arr[4]);
+		this.einsatzGeld = BigDecimal.valueOf(einsatzGeldDoubleWert);
 
-		String SID = String.valueOf(this.Spiel_ID);
-		String SR = String.valueOf(this.Schwer_Rate);
-		String MS = String.valueOf(this.Max_Spieler);
-		String AS = String.valueOf(this.Actuell_Spieler);
-		String EG = String.valueOf(this.EinSatz_Geld_DoubleWert);
+		String SID = String.valueOf(this.spielID);
+		String SR = String.valueOf(this.schwierigRate);
+		String MS = String.valueOf(this.maxSpieler);
+		String AS = String.valueOf(this.aktuelleSpieler);
+		String EG = String.valueOf(this.einsatzGeldDoubleWert);
 		
-		return ("Spieler:\t" + AS + "/" +MS + "\tGeldeinsatz: " + EG);
+		return ("Spieler:\t " + AS + "/" +MS + " Erforderlicher Geldeinsatz: " + EG  + " Euro");
 			
 	}
 	
-//*******************************************************************************************************	
 	
-	public Bundle Packen_SpielInformationen()
+	// ------------------------------------------------------------------------ 	packenSpielInformationen()
+	/*
+	 * Alle SpielInformationen werden gepackt --> zur Weiterlieferung
+	 */
+	
+
+	public Bundle packenSpielInformationen()
     {
     	Bundle SpielInfor = new Bundle();
-    	SpielInfor.putInt("ID_Spiel", this.Spiel_ID);
-    	SpielInfor.putInt("SchwerRate", this.Schwer_Rate);
-    	SpielInfor.putInt("MaxSpieler", this.Max_Spieler);
-    	SpielInfor.putInt("ActuellSpieler", this.Actuell_Spieler + 1);  // diser Fall wir spielen mit dh.  das Spiel schon vorher Exitiert
-    	SpielInfor.putDouble("EinSatzGeld_DoubleWert", this.EinSatz_Geld_DoubleWert);
-    	SpielInfor.putInt("MaxSpielID", this.MaxSpielID);
+    	SpielInfor.putInt("ID_Spiel", this.spielID);
+    	SpielInfor.putInt("SchwerRate", this.schwierigRate);
+    	SpielInfor.putInt("MaxSpieler", this.maxSpieler);
+    	SpielInfor.putInt("ActuellSpieler", this.aktuelleSpieler + 1);  // diser Fall wir spielen mit dh.  das Spiel schon vorher Exitiert
+    	SpielInfor.putDouble("EinSatzGeld_DoubleWert", this.einsatzGeldDoubleWert);
+    	SpielInfor.putInt("MaxSpielID", this.maxSpielID);
 		return SpielInfor;
     }
 	
-//***************************************
-// Informationen von Login Activity wird hier geholt.
-	public Bundle Packen_LoginInformationen()
+	// ------------------------------------------------------------------------ 	packenLoginInformationen()
+		/*
+		 * Alle LoginInformationen werden gepackt --> zur Weiterlieferung
+		 */
+	
+	public Bundle packenLoginInformationen()
 	{
 		Intent callerIntent = getIntent(); 
 		Bundle packageFromCaller = callerIntent.getBundleExtra("LogInformationen");
 		return packageFromCaller;
 	}
-//****************************************************************************************************	
-	public Bundle MaxSpielID_Paket()
-	{Bundle MaxSpielID_P 	= new Bundle(); MaxSpielID_P.putInt("MaxSpielID", this.MaxSpielID); return MaxSpielID_P;}
 	
-//*********************************************************************************************************
+	// ------------------------------------------------------------------------ 	maxSpielIDPaket()
+	/*
+	 * MaxSpielerID packen
+	 */	
+	
 
-	public StringBuilder getList_LoginID_die_das_Spiel_Schon_gespielt_haben()
+	public Bundle maxSpielIDPaket()
+	{Bundle MaxSpielID_P 	= new Bundle(); MaxSpielID_P.putInt("MaxSpielID", this.maxSpielID); return MaxSpielID_P;}
+	
+	// ------------------------------------------------------------------------ 	getListLoginIDSpielSchonGespielt()
+	/*
+	 * Erhalten der LoginID und ob dieser schon gespielt hat
+	 */	
+	public StringBuilder getListLoginIDSpielSchonGespielt()
 	{
 		
-		StringBuilder list_Spieler_Username= new StringBuilder();
-		list_Spieler_Username.append("Actuelle Spieler"+":\t");
+		StringBuilder listSpielerUsername= new StringBuilder();
+		listSpielerUsername.append("Aktuelle Spieler"+":\n");
 		
-		String [] arraySpielerID = String.valueOf(Get_list_ID_der_Spieler()).split("#");
+		String [] arraySpielerID = String.valueOf(getListIDVonSpieler()).split("#");
 		
 		for (int j = 0; j <arraySpielerID.length; j++)
 		{
-			if((Packen_LoginInformationen().getInt("ID_Login"))==Integer.parseInt(arraySpielerID[j].toString().trim()))
-			{this.mit_spielen_verboten=true; break;}
-			else this.mit_spielen_verboten=false;
+			if((packenLoginInformationen().getInt("ID_Login"))==Integer.parseInt(arraySpielerID[j].toString().trim()))
+			{this.mitspielenVerboten=true; break;}
+			else this.mitspielenVerboten=false;
 		}
 
 		for (int j = 0; j <arraySpielerID.length; j++ )
@@ -293,9 +365,9 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 	    		for(int i=0; i<soapArray.getPropertyCount(); i++)
 	    		 {
 	    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
-	    			if(Integer.parseInt(arraySpielerID[j]) ==Integer.parseInt(soapItem.getProperty("LoginID").toString()))
+	    			if(Integer.parseInt(arraySpielerID[j]) ==Integer.parseInt((soapItem.getProperty("LoginID").toString())))
 	    			{
-	    				list_Spieler_Username.append(arraySpielerID[j]+": "+(soapItem.getProperty("Username")+",\t")).toString().trim();
+	    				listSpielerUsername.append(arraySpielerID[j]+": "+(soapItem.getProperty("Username")+"\n")).toString().trim();
 	    				
 	    			}
 	    			else continue;
@@ -308,13 +380,14 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 		}
 		//Toast.makeText(this, "this.Gewinner= "+ this.Gewinner, Toast.LENGTH_LONG).show();
 	
-		return list_Spieler_Username;
+		return listSpielerUsername;
 	}
 	
-//*****************************************************************************************************
-//-----------------------------------------------------------------------------------------------------
-	
-	public StringBuilder Get_list_ID_der_Spieler()
+	// ------------------------------------------------------------------------ 	getListIDVonSpieler()
+	/*
+	 * SpielerID erhalten
+	 */	
+	public StringBuilder getListIDVonSpieler()
 	{
 		StringBuilder list_LoginID= new StringBuilder();
 		list_LoginID.append("");
@@ -337,7 +410,7 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
     		for(int i=0; i<soapArray.getPropertyCount(); i++)
     		 {
     			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
-    			if(this.Spiel_ID ==Integer.parseInt(soapItem.getProperty("SpielID").toString()))
+    			if(this.spielID ==Integer.parseInt(soapItem.getProperty("SpielID").toString()))
     			{
     				list_LoginID.append((soapItem.getProperty("LoginID")+"#")).toString().trim();
     				
@@ -353,20 +426,29 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 		
 		return list_LoginID;
 	}
-//*********************************************************************************************************
-//---------------------------------------------------------------------------------------------------------
-	public boolean Spieler_hat_schon_ein_Vorrat_gegeben()
+
+	// ------------------------------------------------------------------------ 	spielerHatSchonGetippt()
+		/*
+		 * Hat der Spieler schon seinen Tipp abgegeben? true false?
+		 */	
+	
+	
+	public boolean spielerHatSchonGetippt()
 	{
-		if (this.mit_spielen_verboten == true){return true;}
+		if (this.mitspielenVerboten == true){return true;}
 		else return false;
 	}
 	
-//**********************************************************************************************************
-//-------------------------------------- FehlerMeldung -----------------------------------------------------
+
+	// ------------------------------------------------------------------------ 	Fehlermeldung
+			/*
+			 * Fehlermeldung Generierung
+			 */	
+		
 	
-	public void FehlerMeldung(String Meldung)
+	public void fehlermeldung(String Meldung)
 	{
-		AlertDialog.Builder b = new AlertDialog.Builder(SpielFernsterActivity.this);
+		AlertDialog.Builder b = new AlertDialog.Builder(SpielUebersichtActivity.this);
 		b.setMessage(Meldung);
 		b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			
@@ -378,12 +460,15 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
 		});
 		b.create().show();
 	}
-//*************************************************************************************************************
-//-------------------------------------------------------------------------------------------------------------
-	
-	public String Email_Lesen(String SpielID)
+
+	// ------------------------------------------------------------------------ 	emailLesen(String SpielID)
+			/*
+			 * Zusätzlichen String in der E-Mail lesen
+			 */	
+		
+	public String emailLesen(String SpielID)
 	{
-		String Str= "Ohne";
+		String Str= "Nein";
 		try 
     	{
     		final String METHOD_NAME="getListLogin";
@@ -404,7 +489,8 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
     	
     			if (soapItem.getProperty("Email").toString().contains("#"+SpielID))
     			{
-    				Str = Str.replace("Ohne", "");
+    				// Wenn ein Spieler gewonnen hat, ersetze den String mit seinem Namen
+    				Str = Str.replace("Nein", "");
     				if(Str.contains(soapItem.getProperty("Username").toString())){}
     				else{Str = Str+ soapItem.getProperty("Username") +",\t";}
     			}
@@ -415,13 +501,8 @@ public class SpielUebersichtActivity extends ActionBarActivity implements funkti
     	}
     	catch (Exception ex)
     	{
-    		Toast.makeText(this, "GetList Login fail ", Toast.LENGTH_LONG).show();
+    		Toast.makeText(this, "GetList VorratErgebnisse fail ", Toast.LENGTH_LONG).show();
     	}
 		return Str;
 	}
-}
-
-interface funktion
-{
-	public String Email_Lesen(String SpielID);
 }
