@@ -136,12 +136,12 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				
 				if (spielerHatSchonGetippt()==true)
-				{fehlermeldung("Sie hat schon ein Vorrat für dieses Spiel gegeben");}
+				{fehlermeldung("Sie haben schon getippt!");}
 				else 
 				{
 					if (aktuelleSpieler == maxSpieler)
 					{
-						fehlermeldung("leider Keinen Platz mehr\n Bitte wählen Sie andere");
+						fehlermeldung("Kein Platz mehr vorhanden!\n Wählen Sie ein anderes Spiel!");
 					}
 					else{			
 																	

@@ -65,11 +65,11 @@ public class RegistrierungActivity extends ActionBarActivity {
 			{
 				if (pruefenObAlleEditTextAusgefuellt()==false)
 				{
-					FehlerMeldung("Alle EditText müssen erfüllt werden");
+					FehlerMeldung("Alle Felder muessen ausgefuellt werden");
 				}
 				else 
 				{
-					if (istSpielerSchonRegistriert()==true){FehlerMeldung("Username ist schon benutzt.");}
+					if (istSpielerSchonRegistriert()==true){FehlerMeldung("Username wurde schon benutzt!");}
 					else insertLogin();
 				}
 				
@@ -169,7 +169,7 @@ public class RegistrierungActivity extends ActionBarActivity {
 		 }
 		catch (Exception ex)
 		{
-			msg="Registrierung hat irgendwas Fehler";
+			msg="Fehler bei der Registrierung!";
 		}
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
