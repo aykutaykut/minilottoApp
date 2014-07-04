@@ -841,7 +841,175 @@ public class SpielLottoActivity extends ActionBarActivity {
 		
 		return gedrueckt;
 	}
+	
+	
+	// ------------------------------------------------------------------------  ruckgabeVonUsernameVorratErgebnis() 
+		/*
+		 * Entsprechend zum Tipp wird der dazugehörige Username entnommen.
+		 */	
+	public StringBuilder ruckgabeVonUsernameVorratErgebnis()
+	{
+		Intent callerIntent = getIntent(); 
+		Bundle packageFromSpiel = callerIntent.getBundleExtra("SpielInformationen");
+		
+		String [] VorErg = new String [packageFromSpiel.getInt("MaxSpieler")+5];		
+		int [] LogID = new int [packageFromSpiel.getInt("MaxSpieler")+5];
+		
+		Object [] array_VorErg = getListHatVorratErgebnisGleicheSpielID().toArray();	
+		
+		for (int i=0; i<array_VorErg.length;i++)
+		{
+			// split elements in array_VorrErg to 2 new Array 
+			String [] arr = array_VorErg[i].toString().trim().split(" "); 
+			LogID[i]= Integer.parseInt(arr [0]);
+			VorErg[i] = arr[1];
+		
+			
+		}
+		
+		
+		StringBuilder listSpielerUsernameVorratErgebnis = new StringBuilder();
+		listSpielerUsernameVorratErgebnis.append("\n Mitspieler"+":\t");
+		
+	
+		
+		for (int j = 0; j <LogID.length; j++ )
+		{
+			try 
+	    	{
+	    		final String METHOD_NAME="getListLogin";
+	    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+	    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+	    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+	    		envelope.dotNet=true;
+	    		envelope.setOutputSoapObject(request);
+	    		MarshalFloat marshal=new MarshalFloat();
+	    		marshal.register(envelope);
+	    		
+	    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
+	    		androidHttpTransport.call(SOAP_ACTION, envelope);
+	    		SoapObject soapArray=(SoapObject) envelope.getResponse();
+	    		
+	    		
+	    		
+	    		for(int i=0; i<soapArray.getPropertyCount(); i++)
+	    		 {
+	    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
+	    			if(LogID[j]==Integer.parseInt(soapItem.getProperty("LoginID").toString()))
+	    			{
+	    				
+	    				listSpielerUsernameVorratErgebnis.append("\n"+LogID[j]+": "+(soapItem.getProperty("Username")+"--\tVorrat:\t"+VorErg[j])).toString().trim();
+	    				
+	    			}
+	    			else continue;
+	    		 }
+	    		   		
+	    	}
+	    	catch (Exception ex)
+	    	{
+	    		Toast.makeText(this, "Username_VorratErgebnis_zurueck_geben fail ", Toast.LENGTH_LONG).show();
+	    	}
+		}
+		
+		
+		return listSpielerUsernameVorratErgebnis;
+	}
+	
+	
 
+	
+	//#########################################################################################################
+		
+		public boolean ActuellSpieler_Gleich_MaxSpieler(int SpielID)
+		{
+			boolean Str=false;
+			try {
+				final String METHOD_NAME = "getSpiel";
+				final String SOAP_ACTION = NAMESPACE + METHOD_NAME;
+
+				SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+				SoapObject newSpiel = new SoapObject(NAMESPACE, "id");
+				newSpiel.addProperty("id", SpielID);
+				request.addSoapObject(newSpiel);
+
+				SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+				envelope.dotNet = true;
+				envelope.setOutputSoapObject(request);
+				MarshalFloat marshal = new MarshalFloat();
+				marshal.register(envelope);
+
+				HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+				androidHttpTransport.call(SOAP_ACTION, envelope);
+				newSpiel = (SoapObject) envelope.getResponse();
+				
+				
+				
+				String Max=(newSpiel.getProperty("MaxSpieler").toString());
+				String Actuell=(newSpiel.getProperty("ActuellSpieler").toString());
+				if(Max.toString().trim().equals(Actuell.toString().trim())){Str=true;}
+				else {Str = false;}
+
+			} catch (Exception ex) {
+				fehlermeldung(" Get_Spieler_from_Database hat Fehler \t");
+			}
+
+			return Str;
+		}
+		
+		public void Update_packageFromSpiel()
+		{
+			Intent callerIntent = getIntent(); 
+			Bundle packageFromSpiel = callerIntent.getBundleExtra("SpielInformationen");
+			packageFromSpiel.putInt("ID_Spiel", packageFromSpiel.getInt("MaxSpielID")+1);
+			
+		}
+
+		
+		//************************************************************************************************************
+		//------------------------------------------------------------------------------------------------------------
+			
+			public String Email_Lesen(String SpielID)
+			{
+				String Str= "Kein";
+				try 
+		    	{
+		    		final String METHOD_NAME="getListLogin";
+		    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
+		    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
+		    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		    		envelope.dotNet=true;
+		    		envelope.setOutputSoapObject(request);
+		    		MarshalFloat marshal=new MarshalFloat();
+		    		marshal.register(envelope);
+		    		
+		    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
+		    		androidHttpTransport.call(SOAP_ACTION, envelope);
+		    		SoapObject soapArray=(SoapObject) envelope.getResponse();
+		    		for(int i=0; i<soapArray.getPropertyCount(); i++)
+		    		 {
+		    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
+		    	
+		    			if (soapItem.getProperty("Email").toString().contains("#"+SpielID))
+		    			{
+		    				Str = Str.replace("Kein", "");
+		    				if(Str.contains(soapItem.getProperty("Username").toString())){}
+		    				else{Str = Str+ soapItem.getProperty("Username") +",\t";}
+		    			}
+		    			else {}
+		    			
+		    		 }
+		    		   		
+		    	}
+		    	catch (Exception ex)
+		    	{
+		    		Toast.makeText(this, "GetList Login fail ", Toast.LENGTH_LONG).show();
+		    	}
+				
+				
+				Str = Str +"\tGewinner!";
+				
+				return Str;
+			}
 		
 		
 		
