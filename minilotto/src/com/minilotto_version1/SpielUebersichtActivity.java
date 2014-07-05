@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 
 
-
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalFloat;
 import org.ksoap2.serialization.SoapObject;

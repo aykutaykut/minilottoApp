@@ -1,4 +1,4 @@
-package com.minilotto_version1;
+package com.minilotto;
 
 
 import java.math.BigDecimal;
@@ -42,7 +42,7 @@ public class SpielLottoActivity extends ActionBarActivity {
 	
 	private Button ausfuehren,refresh;
 	private EditText z1,z2,z3;
-	private TextView ergebnis;
+	private TextView ergebnis,ziehung;
 	
 	public TextView information,information2;
 	
@@ -73,10 +73,11 @@ public class SpielLottoActivity extends ActionBarActivity {
 		z3 = (EditText) findViewById(R.id.editZahl3);
 		
 		information = (TextView) findViewById(R.id.textView2);
+		ziehung = (TextView) findViewById(R.id.ziehung);
 		ergebnis = (TextView) findViewById(R.id.txtErgebnis_zeigen);
 		information2 = (TextView) findViewById(R.id.textView22);
 		
-		auspackenLoginSpielInformationen(); 	
+		auspackenLoginSpielInformationen(""); 	
 		
 		// ------------------------------------------------------------------------ onClick -> ausfuehren
 		/*
@@ -120,16 +121,37 @@ public class SpielLottoActivity extends ActionBarActivity {
 		/*
 		 * Durch Drücken der refresh-Taste aktualisieren sich die Informationen.
 		 */
-		
 		refresh.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				refresh.refreshDrawableState();			
-				auspackenLoginSpielInformationen(); 
+				
+				refresh.refreshDrawableState();	
+				
+				Intent callerIntent = getIntent(); 
+				Bundle packageFromSpiel = callerIntent.getBundleExtra("SpielInformationen");
+				if (ActuellSpieler_Gleich_MaxSpieler(packageFromSpiel.getInt("ID_Spiel"))==true)//########################################################
+				{
+					String emailLesen=Email_Lesen(String.valueOf(packageFromSpiel.getInt("ID_Spiel")));
+					auspackenLoginSpielInformationen(emailLesen); 
+					ziehung.setText(getErgebnisDerSpielID());
+				}
+				else{
+					auspackenLoginSpielInformationen("");
+					ergebnis.setText(vorratErgebnisString);
+				}
 				
 			}
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 	
@@ -191,7 +213,7 @@ public class SpielLottoActivity extends ActionBarActivity {
     	}
     	catch (Exception ex)
     	{
-    		fehlermeldung("Fehler bei Internet Verbinden");
+    		fehlermeldung("Fehler bei der Internetverbindung");
     	}
 		
 	}
@@ -231,6 +253,7 @@ public class SpielLottoActivity extends ActionBarActivity {
 						String.valueOf(ranzahl2).trim()+String.valueOf(ranzahl3).trim()).trim();
 				
 				insertSpiel();
+				Update_packageFromSpiel();
 				updateLogin();
 				insertErgebnis();  
 				insertVorratErgebnis();
@@ -264,7 +287,7 @@ public class SpielLottoActivity extends ActionBarActivity {
 	 */
 	
 	
-	public void auspackenLoginSpielInformationen()
+	public void auspackenLoginSpielInformationen(String Str)
 	{
 		Intent callerIntent = getIntent(); 
 		Bundle packageFromLogin = callerIntent.getBundleExtra("LogInformationen");
@@ -277,8 +300,8 @@ public class SpielLottoActivity extends ActionBarActivity {
 				+"\n\n Max. Spieler= "+packageFromSpiel.getInt("MaxSpieler")
 				+"\n\n Geldeinsatz= "+packageFromSpiel.getDouble("EinSatzGeld_DoubleWert")
 				+"\n\n Pot= "+(packageFromSpiel.getDouble("EinSatzGeld_DoubleWert")*packageFromSpiel.getInt("MaxSpieler"))
-				+"");
-		information.setText(" "+String.valueOf(ruckgabeVonUsernameVorratErgebnis()));
+				+""+Str);
+		information.setText(" "+String.valueOf(ruckgabeVonUsernameVorratErgebnis())+"\n"+Str);
 	
 	
 	
@@ -338,7 +361,7 @@ public class SpielLottoActivity extends ActionBarActivity {
 		 */
 	public HashMap gewinnerSuchen()
 	{
-		Toast.makeText(this, "GewinnerSuchen", Toast.LENGTH_LONG).show(); // ####test #######
+		//Toast.makeText(this, "GewinnerSuchen", Toast.LENGTH_LONG).show(); // ####test #######
 		
 		HashMap ID = new HashMap();
 		String GewinnerID = String.valueOf(vergleichVorratErgebnisErgebnis()).trim();
@@ -818,78 +841,9 @@ public class SpielLottoActivity extends ActionBarActivity {
 		
 		return gedrueckt;
 	}
-	
-	
-	// ------------------------------------------------------------------------  ruckgabeVonUsernameVorratErgebnis() 
-		/*
-		 * Entsprechend zum Tipp wird der dazugehörige Username entnommen.
-		 */	
-	public StringBuilder ruckgabeVonUsernameVorratErgebnis()
-	{
-		Intent callerIntent = getIntent(); 
-		Bundle packageFromSpiel = callerIntent.getBundleExtra("SpielInformationen");
-		
-		String [] VorErg = new String [packageFromSpiel.getInt("MaxSpieler")+5];		
-		int [] LogID = new int [packageFromSpiel.getInt("MaxSpieler")+5];
-		
-		Object [] array_VorErg = getListHatVorratErgebnisGleicheSpielID().toArray();	
-		
-		for (int i=0; i<array_VorErg.length;i++)
-		{
-			// split elements in array_VorrErg to 2 new Array 
-			String [] arr = array_VorErg[i].toString().trim().split(" "); 
-			LogID[i]= Integer.parseInt(arr [0]);
-			VorErg[i] = arr[1];
-		
-			
-		}
+
 		
 		
-		StringBuilder listSpielerUsernameVorratErgebnis = new StringBuilder();
-		listSpielerUsernameVorratErgebnis.append("\n Mitspieler"+":\t");
-		
-	
-		
-		for (int j = 0; j <LogID.length; j++ )
-		{
-			try 
-	    	{
-	    		final String METHOD_NAME="getListLogin";
-	    		final String SOAP_ACTION=NAMESPACE+METHOD_NAME;
-	    		SoapObject request=new SoapObject(NAMESPACE, METHOD_NAME);
-	    		SoapSerializationEnvelope envelope= new SoapSerializationEnvelope(SoapEnvelope.VER11);
-	    		envelope.dotNet=true;
-	    		envelope.setOutputSoapObject(request);
-	    		MarshalFloat marshal=new MarshalFloat();
-	    		marshal.register(envelope);
-	    		
-	    		HttpTransportSE androidHttpTransport= new HttpTransportSE(URL);
-	    		androidHttpTransport.call(SOAP_ACTION, envelope);
-	    		SoapObject soapArray=(SoapObject) envelope.getResponse();
-	    		
-	    		
-	    		
-	    		for(int i=0; i<soapArray.getPropertyCount(); i++)
-	    		 {
-	    			SoapObject soapItem =(SoapObject) soapArray.getProperty(i);
-	    			if(LogID[j]==Integer.parseInt(soapItem.getProperty("LoginID").toString()))
-	    			{
-	    				
-	    				listSpielerUsernameVorratErgebnis.append("\n"+LogID[j]+": "+(soapItem.getProperty("Username")+"--\tVorrat:\t"+VorErg[j])).toString().trim();
-	    				
-	    			}
-	    			else continue;
-	    		 }
-	    		   		
-	    	}
-	    	catch (Exception ex)
-	    	{
-	    		Toast.makeText(this, "Username_VorratErgebnis_zurueck_geben fail ", Toast.LENGTH_LONG).show();
-	    	}
-		}
 		
 		
-		return listSpielerUsernameVorratErgebnis;
-	}
-	
 }
