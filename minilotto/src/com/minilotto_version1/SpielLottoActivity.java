@@ -1,4 +1,4 @@
-package com.minilotto;
+package com.minilotto_version1;
 
 
 import java.math.BigDecimal;
@@ -1005,9 +1005,13 @@ public class SpielLottoActivity extends ActionBarActivity {
 		    		Toast.makeText(this, "GetList Login fail ", Toast.LENGTH_LONG).show();
 		    	}
 				
-				
+				if (Str=="Kein"){
 				Str = Str +"\tGewinner!";
-				
+				}
+				else 
+				{
+					Str = Str + " ist der Gewinner!";
+				}
 				return Str;
 			}
 		
