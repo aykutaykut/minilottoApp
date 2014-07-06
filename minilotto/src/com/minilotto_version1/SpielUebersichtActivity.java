@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 
 
+
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalFloat;
 import org.ksoap2.serialization.SoapObject;
@@ -101,7 +103,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 		
 		// ------------------------------------------------------------------------ 	Button neues Spiel 
 		/*
-		 * Button um neues Spiel zu erˆffnen
+		 * Button um neues Spiel zu er√∂ffnen
 		 */
 	
 		neuesSpiel.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +127,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 		/*
 		 * Buttom um mitzuspielen
 		 * 
-		 * F‰lle: Wenn man schon getippt hat --> Fehlermeldung
+		 * F√§lle: Wenn man schon getippt hat --> Fehlermeldung
 		 * Wenn Spiel schon voll --> Fehlermeldung
 		 */
 		mitSpielen.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +141,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 				{
 					if (aktuelleSpieler == maxSpieler)
 					{
-						fehlermeldung("Kein Platz mehr vorhanden!\n W‰hlen Sie ein anderes Spiel!");
+						fehlermeldung("Kein Platz mehr vorhanden!\n W√§hlen Sie ein anderes Spiel!");
 					}
 					else{			
 																	
@@ -181,7 +183,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 					*/
 			//		break;
 			//	default: 
-			//		FehlerMeldung("W‰hlen Sie bitte ein Spiel!");
+			//		FehlerMeldung("W√§hlen Sie bitte ein Spiel!");
 					
 				}
 		
@@ -191,10 +193,10 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 	// ------------------------------------------------------------------------ 	doGetList(); 
 	/*
 	 * Abfruf der Daten des Spiels
-	 * F‰lle:
+	 * F√§lle:
 	 * 1 - Spielplatz nicht vorhanden, Gewinner nicht vorhanden --> Spiel zu Ende -> Kein Gewinner!
 	 * 2 - Spielplatz nicht vorhanden, Gewinner vorhanden -> Spiel zu Ende -> Gewinner: Spieler XY!
-	 * 3 - Spielplatz vorhanden -> Spielpl‰tze verf¸gbar! 
+	 * 3 - Spielplatz vorhanden -> Spielpl√§tze verf√ºgbar! 
 	 * 
 	 */
 	
@@ -239,7 +241,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 					}
 			   	}
 				else {
-				str="\t - Spielpl‰tze vorhanden!";
+				str="\t - Spielpl√§tze vorhanden!";
 				}
 					
 				arrSpiel_copy.add("Game: "+SpielID+" "+str);// #############################################################
@@ -257,8 +259,8 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 	
 	// ------------------------------------------------------------------------ 	informationenVonString(...)
 		/*
-		 * Informationen f¸r das Informationsfenster bekommen:
-		 * Spieleranzahl Aktuelle/Maximale + Erforderliche Geldeinsatz f¸r das Spiel
+		 * Informationen f√ºr das Informationsfenster bekommen:
+		 * Spieleranzahl Aktuelle/Maximale + Erforderliche Geldeinsatz f√ºr das Spiel
 		 */
 		
 
@@ -461,7 +463,7 @@ public class SpielUebersichtActivity extends ActionBarActivity {
 
 	// ------------------------------------------------------------------------ 	emailLesen(String SpielID)
 			/*
-			 * Zus‰tzlichen String in der E-Mail lesen
+			 * Zus√§tzlichen String in der E-Mail lesen
 			 */	
 		
 	public String emailLesen(String SpielID)

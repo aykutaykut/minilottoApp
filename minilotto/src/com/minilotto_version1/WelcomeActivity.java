@@ -1,5 +1,4 @@
 package com.minilotto_version1;
-
 import com.minilotto_version1.R;
 
 import android.app.Activity;

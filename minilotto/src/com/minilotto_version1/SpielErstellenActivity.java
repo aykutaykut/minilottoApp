@@ -99,7 +99,7 @@ public class SpielErstellenActivity extends ActionBarActivity {
 		einsatz = (EditText) findViewById(R.id.editEinsatz);
 		if ((maxSpieler.getText().toString().equals(""))||(einsatz.getText().toString().equals("")))
 		{
-			fehlermeldung("Sie müssen alle Informationen eingeben");
+			fehlermeldung("Sie mÃ¼ssen alle Informationen eingeben");
 		}
 		
 		else 
