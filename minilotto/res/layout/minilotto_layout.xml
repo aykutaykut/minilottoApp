@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_back_main" >
+
+    <TextView
+        android:id="@+id/ziehung"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#AAe8edf2"
+        android:gravity="center"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/EditText01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ziehung"
+        android:layout_alignParentLeft="true"
+        android:ems="10"
+        android:text="Lottozahlen:"
+        android:textColor="#2e445f"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtErgebnis_zeigen"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ziehung"
+        android:background="#AAe8edf2"
+        android:gravity="center"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtErgebnis_zeigen"
+        android:layout_alignParentLeft="true"
+        android:ems="10"
+        android:text="Ihr Tipp:"
+        android:textColor="#2e445f"
+        android:textSize="18sp" >
+
+        <requestFocus />
+    </TextView>
+
+    <EditText
+        android:id="@+id/editZahl3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtErgebnis_zeigen"
+        android:layout_marginTop="28dp"
+        android:ems="3"
+        android:hint="z3"
+        android:inputType="number"
+        android:textColor="#f5f7fa"
+        android:textColorHint="#b2b6bb" />
+
+    <EditText
+        android:id="@+id/editZahl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editZahl3"
+        android:layout_alignBottom="@+id/editZahl3"
+        android:layout_centerHorizontal="true"
+        android:ems="3"
+        android:hint="z2"
+        android:inputType="number"
+        android:textColor="#f5f7fa"
+        android:textColorHint="#b2b6bb" />
+
+    <EditText
+        android:id="@+id/editZahl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editZahl2"
+        android:layout_alignBottom="@+id/editZahl2"
+        android:layout_alignParentLeft="true"
+        android:ems="3"
+        android:hint="z1"
+        android:inputType="number"
+        android:textColor="#f5f7fa"
+        android:textColorHint="#b2b6bb" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:background="#0d2037"
+        android:gravity="center"
+        
+        android:textColor="#f5f7fa" />
+
+    <Button
+        android:id="@+id/btnAusfuehren"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/editZahl3"
+        android:background="@drawable/los"
+        android:textColor="#29405b" />
+
+    <Button
+        android:id="@+id/refresh"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/refresh" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="160dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="#f0f2f5"
+        android:text="  "
+        android:textColor="#0d2037" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/textView22"
+        android:background="#AAf3f8fc"
+        android:text="  "
+        android:textColor="#0d2037" />
+
+</RelativeLayout>

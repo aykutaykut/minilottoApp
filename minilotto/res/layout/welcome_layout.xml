@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:background="#0d2037"
+        android:textColor="#f5f7fa"
+        android:text="Willkommen zu Mini Lotto!" />
+
+    <Button
+        android:id="@+id/btnMinilotto_Spielen"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="Minilotto Spielen"
+              
+         android:background="#eff3f7"
+       
+        android:textColor="#29405b"  />
+
+    <TextView
+        android:id="@+id/txtSpiel_Hinweis"
+        android:layout_width="fill_parent"
+        android:layout_height="190dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/TextView03"
+        android:background="#AAf3f8fc"
+        android:text=""
+        android:textColor="#000000" />
+
+  
+
+    <TextView
+        android:id="@+id/txtHinweis"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnPrivate_Informationen"
+        android:background="#eff3f7"
+        android:gravity="center"
+        android:text="Spiel Hinweise"
+        android:textColor="#29405b"
+        android:textSize="18sp"
+       />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnMinilotto_Spielen"
+        android:background="#0d2037"
+        android:gravity="center"
+    
+        android:textColor="#394f6a" />
+
+    <Button
+        android:id="@+id/btnPrivate_Informationen"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TextView02"
+        android:background="#e4e8ec"
+        android:text="Private Information"
+        android:textColor="#29405b" />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtHinweis"
+        android:background="#0d2037"
+        android:gravity="center"
+        android:textColor="#394f6a" />
+
+</RelativeLayout>
