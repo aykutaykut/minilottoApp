@@ -15,19 +15,4 @@
     <string name="title_activity_main_activity_test_test">MainActivity_test_test</string>
     <string name="title_activity_wellcome_">Wellcome_Activity</string>
 
-    <string name="hello">genau das richtige für &quot;kleine Zocker&quot;</string>
-   
-    <string name="txt_optionsauswahl">Bitte wählen Sie ihre Zahlen selbst  !</string>
-    <string name="txt_label_selbst_dreschen">Zahlen wählen</string>
-    <string name="txt_selbst_dreschen">Wählen Sie ihre eigenen 3 Zahlen . Tippen Sie auf die Pfeile rechts um Sie auszutauschen.</string>
-    <string name="txt_label_dreschen_lassen">Lottogenerator</string>
-    <string name="txt_dreschen_lassen">Auslosung der Zahlen  (Sie können Ihr Gerät auch schütteln)</string>
-    <string name="txt_dreschen_lassen_text1">1</string>
-    <string name="txt_dreschen_lassen_text2">2</string>
-    <string name="txt_dreschen_lassen_text3">3</string>
-    <string name="btn_selbst_dreschen">Tipp abgeben</string><string name="btn_dreschen_lassen">Lotterie</string>
- 
-    <string name="btn_phrase_dreschen">Auslosung</string>
-    <string name="txt_ganzer_satz">&lt;Zahlen&gt;</string>
-
 </resources>

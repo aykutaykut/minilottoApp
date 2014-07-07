@@ -10,26 +10,5 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
- <style name="padded_linear_layout">
-        <item name="android:padding">16dp</item>
-    </style>
-    <style name="heading" parent="android:Widget.Holo.TextView">
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-    </style>
-    <style name="generic_text" parent="android:Widget.Holo.TextView">
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-    </style>
-    <style name="generic_button">
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-    </style>
-    <style name="zentrierter_text" parent="@style/generic_text">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_height">40sp</item>
-    </style>
-
 
 </resources>

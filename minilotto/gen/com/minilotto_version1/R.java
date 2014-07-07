@@ -8,18 +8,13 @@
 package com.minilotto_version1;
 
 public final class R {
-    public static final class array {
-        public static final int Zahl1=0x7f040000;
-        public static final int Zahl2=0x7f040001;
-        public static final int Zahl3=0x7f040002;
-    }
     public static final class attr {
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
          */
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
+        public static final int activity_horizontal_margin=0x7f040000;
+        public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
         public static final int android_back_main=0x7f020000;
@@ -32,91 +27,68 @@ public final class R {
         public static final int refresh=0x7f020007;
     }
     public static final class id {
-        public static final int EditText01=0x7f08000a;
-        public static final int ListView=0x7f080027;
-        public static final int TextView01=0x7f08001b;
-        public static final int TextView02=0x7f08002e;
-        public static final int TextView03=0x7f08002b;
-        public static final int btnAusfuehren=0x7f080012;
-        public static final int btnErstellen=0x7f08001a;
-        public static final int btnLogin=0x7f080003;
-        public static final int btnMinilotto_Spielen=0x7f080029;
-        public static final int btnMitspielen=0x7f080028;
-        public static final int btnNeuSpiel=0x7f080025;
-        public static final int btnPrivate_Informationen=0x7f08002d;
-        public static final int btnRegister=0x7f080002;
-        public static final int btn_Auslosung=0x7f080008;
-        public static final int button1=0x7f080020;
-        public static final int editEinsatz=0x7f080017;
-        public static final int editEmailReg=0x7f08001e;
-        public static final int editMaxSpieler=0x7f080015;
-        public static final int editPassword=0x7f080000;
-        public static final int editPasswordsReg=0x7f08001c;
-        public static final int editText1=0x7f08000c;
-        public static final int editUsername=0x7f080001;
-        public static final int editUsernameReg=0x7f08001d;
-        public static final int editZahl1=0x7f08000f;
-        public static final int editZahl2=0x7f08000e;
-        public static final int editZahl3=0x7f08000d;
-        public static final int editkontoReg=0x7f08001f;
-        public static final int imageView1=0x7f080004;
-        public static final int radioGroup=0x7f080018;
-        public static final int refresh=0x7f080013;
-        public static final int sp_text_teil1=0x7f080021;
-        public static final int sp_text_teil2=0x7f080022;
-        public static final int sp_text_teil3=0x7f080023;
-        public static final int textView1=0x7f080010;
-        public static final int textView2=0x7f080011;
-        public static final int textView22=0x7f080014;
-        public static final int textView3=0x7f080016;
-        public static final int textView5=0x7f080019;
-        public static final int txtErgebnis_zeigen=0x7f08000b;
-        public static final int txtHinweis=0x7f08002c;
-        public static final int txtInformation=0x7f080026;
-        public static final int txtSpiel_Hinweis=0x7f08002a;
-        public static final int txt_ganzer_satz=0x7f080024;
-        public static final int txt_text_teil1=0x7f080005;
-        public static final int txt_text_teil2=0x7f080006;
-        public static final int txt_text_teil3=0x7f080007;
-        public static final int ziehung=0x7f080009;
+        public static final int EditText01=0x7f070006;
+        public static final int ListView=0x7f07001f;
+        public static final int TextView01=0x7f070017;
+        public static final int TextView02=0x7f070026;
+        public static final int TextView03=0x7f070023;
+        public static final int btnAusfuehren=0x7f07000e;
+        public static final int btnErstellen=0x7f070016;
+        public static final int btnLogin=0x7f070003;
+        public static final int btnMinilotto_Spielen=0x7f070021;
+        public static final int btnMitspielen=0x7f070020;
+        public static final int btnNeuSpiel=0x7f07001d;
+        public static final int btnPrivate_Informationen=0x7f070025;
+        public static final int btnRegister=0x7f070002;
+        public static final int button1=0x7f07001c;
+        public static final int editEinsatz=0x7f070013;
+        public static final int editEmailReg=0x7f07001a;
+        public static final int editMaxSpieler=0x7f070011;
+        public static final int editPassword=0x7f070000;
+        public static final int editPasswordsReg=0x7f070018;
+        public static final int editText1=0x7f070008;
+        public static final int editUsername=0x7f070001;
+        public static final int editUsernameReg=0x7f070019;
+        public static final int editZahl1=0x7f07000b;
+        public static final int editZahl2=0x7f07000a;
+        public static final int editZahl3=0x7f070009;
+        public static final int editkontoReg=0x7f07001b;
+        public static final int imageView1=0x7f070004;
+        public static final int radioGroup=0x7f070014;
+        public static final int refresh=0x7f07000f;
+        public static final int textView1=0x7f07000c;
+        public static final int textView2=0x7f07000d;
+        public static final int textView22=0x7f070010;
+        public static final int textView3=0x7f070012;
+        public static final int textView5=0x7f070015;
+        public static final int txtErgebnis_zeigen=0x7f070007;
+        public static final int txtHinweis=0x7f070024;
+        public static final int txtInformation=0x7f07001e;
+        public static final int txtSpiel_Hinweis=0x7f070022;
+        public static final int ziehung=0x7f070005;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int dreschen_lassen=0x7f030001;
-        public static final int minilotto_layout=0x7f030002;
-        public static final int new_spiel_erstellen=0x7f030003;
-        public static final int register_layout=0x7f030004;
-        public static final int selbst_dreschen=0x7f030005;
-        public static final int spiel_uebersicht=0x7f030006;
-        public static final int welcome_layout=0x7f030007;
+        public static final int minilotto_layout=0x7f030001;
+        public static final int new_spiel_erstellen=0x7f030002;
+        public static final int register_layout=0x7f030003;
+        public static final int spiel_uebersicht=0x7f030004;
+        public static final int welcome_layout=0x7f030005;
     }
     public static final class string {
-        public static final int Begrussung=0x7f060001;
-        public static final int action_settings=0x7f060002;
-        public static final int app_name=0x7f060000;
-        public static final int btn_dreschen_lassen=0x7f060017;
-        public static final int btn_phrase_dreschen=0x7f060018;
-        public static final int btn_selbst_dreschen=0x7f060016;
-        public static final int hello=0x7f06000d;
-        public static final int hello_world=0x7f060004;
-        public static final int title_activity_einfach_spiel=0x7f060008;
-        public static final int title_activity_main_activity_test_test=0x7f06000b;
-        public static final int title_activity_mit_register_fernster=0x7f060007;
-        public static final int title_activity_mittle_spiel=0x7f060009;
-        public static final int title_activity_new_spiel_fernster=0x7f060006;
-        public static final int title_activity_register_fernster=0x7f060005;
-        public static final int title_activity_schwer_spiel=0x7f06000a;
-        public static final int title_activity_spiel_fernster=0x7f060003;
-        public static final int title_activity_wellcome_=0x7f06000c;
-        public static final int txt_dreschen_lassen=0x7f060012;
-        public static final int txt_dreschen_lassen_text1=0x7f060013;
-        public static final int txt_dreschen_lassen_text2=0x7f060014;
-        public static final int txt_dreschen_lassen_text3=0x7f060015;
-        public static final int txt_ganzer_satz=0x7f060019;
-        public static final int txt_label_dreschen_lassen=0x7f060011;
-        public static final int txt_label_selbst_dreschen=0x7f06000f;
-        public static final int txt_optionsauswahl=0x7f06000e;
-        public static final int txt_selbst_dreschen=0x7f060010;
+        public static final int Begrussung=0x7f050001;
+        public static final int action_settings=0x7f050002;
+        public static final int app_name=0x7f050000;
+        public static final int hello_world=0x7f050004;
+        public static final int title_activity_einfach_spiel=0x7f050008;
+        public static final int title_activity_main_activity_test_test=0x7f05000b;
+        public static final int title_activity_mit_register_fernster=0x7f050007;
+        public static final int title_activity_mittle_spiel=0x7f050009;
+        public static final int title_activity_new_spiel_fernster=0x7f050006;
+        public static final int title_activity_register_fernster=0x7f050005;
+        public static final int title_activity_schwer_spiel=0x7f05000a;
+        public static final int title_activity_spiel_fernster=0x7f050003;
+        public static final int title_activity_wellcome_=0x7f05000c;
     }
     public static final class style {
         /** 
@@ -131,7 +103,7 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070006;
+        public static final int AppBaseTheme=0x7f060001;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -139,11 +111,6 @@ public final class R {
  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070000;
-        public static final int generic_button=0x7f070004;
-        public static final int generic_text=0x7f070003;
-        public static final int heading=0x7f070002;
-        public static final int padded_linear_layout=0x7f070001;
-        public static final int zentrierter_text=0x7f070005;
+        public static final int AppTheme=0x7f060000;
     }
 }
