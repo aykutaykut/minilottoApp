@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.minilotto_version1"
+    package="com.minilotto"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -30,7 +30,7 @@
             android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.minilotto_version1.MainActivity" />
+                android:value="com.minilotto.MainActivity" />
         </activity>
         <activity
             android:name="com.minilotto.RegistrierungActivity"
@@ -38,7 +38,7 @@
             android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.minilotto_version1.MainActivity" />
+                android:value="com.minilotto.MainActivity" />
         </activity>
         <activity
             android:name="com.minilotto.SpielErstellenActivity"
@@ -66,7 +66,7 @@
             android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.minilotto_version1.MainActivity" />
+                android:value="com.minilotto.MainActivity" />
         </activity>
         <activity
             android:name="com.minilotto.WelcomeActivity"
@@ -74,7 +74,7 @@
             android:parentActivityName="com.minilotto.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.minilotto_version1.MainActivity" />
+                android:value="com.minilotto.MainActivity" />
         </activity>
     </application>
 
